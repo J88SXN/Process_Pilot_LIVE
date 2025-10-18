@@ -6,22 +6,28 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/components/AuthProvider";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from "@/components/ui/select";
 
-// Popular automation platforms
-const platforms = [
-  { id: "zapier", label: "Zapier" },
-  { id: "make", label: "Make (Integromat)" },
-  { id: "uipath", label: "UiPath" },
-  { id: "powerautomate", label: "Power Automate" },
-  { id: "airtable", label: "Airtable" },
-  { id: "n8n", label: "n8n" },
-  { id: "custom", label: "Custom Solution" },
-  { id: "other", label: "Other" }
+const budgetOptions = [
+  { value: "usd_0_1k", label: "USD 0 - 1,000" },
+  { value: "usd_1k_5k", label: "USD 1,000 - 5,000" },
+  { value: "usd_5k_plus", label: "USD 5,000+" },
+  { value: "gbp_0_1k", label: "GBP 0 - 1,000" },
+  { value: "gbp_1k_5k", label: "GBP 1,000 - 5,000" },
+  { value: "gbp_5k_plus", label: "GBP 5,000+" },
+  { value: "eur_0_1k", label: "EUR 0 - 1,000" },
+  { value: "eur_1k_5k", label: "EUR 1,000 - 5,000" },
+  { value: "eur_5k_plus", label: "EUR 5,000+" }
 ];
 
 const RequestForm = () => {
@@ -34,24 +40,12 @@ const RequestForm = () => {
     email: "",
     company: "",
     description: "",
-    platforms: [] as string[],
-    otherPlatform: "",
     budget: "",
     timeline: "",
     additionalInfo: "",
     scheduleConsultation: false,
     preferredContactMethod: "email"
   });
-
-  const handlePlatformChange = (platform: string) => {
-    setFormData(prev => {
-      const updatedPlatforms = prev.platforms.includes(platform)
-        ? prev.platforms.filter(p => p !== platform)
-        : [...prev.platforms, platform];
-      
-      return { ...prev, platforms: updatedPlatforms };
-    });
-  };
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -83,12 +77,7 @@ const RequestForm = () => {
     
     setIsSubmitting(true);
     
-    // Prepare platforms list including "other" if specified
-    let platformsList = [...formData.platforms];
-    if (formData.platforms.includes("other") && formData.otherPlatform) {
-      platformsList = platformsList.filter(p => p !== "other");
-      platformsList.push(formData.otherPlatform);
-    }
+    const platformsList = ["make"];
     
     try {
       console.log("Submitting request with user ID:", user.id);
@@ -144,8 +133,6 @@ const RequestForm = () => {
         email: "",
         company: "",
         description: "",
-        platforms: [],
-        otherPlatform: "",
         budget: "",
         timeline: "",
         additionalInfo: "",
@@ -230,50 +217,31 @@ const RequestForm = () => {
             />
           </div>
 
-          <div className="space-y-3">
-            <Label>Which platforms do you currently use or prefer?</Label>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-              {platforms.map(platform => (
-                <div key={platform.id} className="flex items-center space-x-2">
-                  <Checkbox
-                    id={platform.id}
-                    checked={formData.platforms.includes(platform.id)}
-                    onCheckedChange={() => handlePlatformChange(platform.id)}
-                  />
-                  <Label
-                    htmlFor={platform.id}
-                    className="text-sm font-normal cursor-pointer"
-                  >
-                    {platform.label}
-                  </Label>
-                </div>
-              ))}
-            </div>
+          <div className="space-y-2 p-4 bg-muted/30 rounded-lg border border-muted">
+            <h3 className="text-sm font-semibold">Automation Platform</h3>
+            <p className="text-sm text-muted-foreground">
+              We build, launch, and maintain all automations using Make.com to ensure consistent support.
+            </p>
           </div>
-
-          {formData.platforms.includes("other") && (
-            <div className="space-y-2">
-              <Label htmlFor="otherPlatform">Specify Other Platform</Label>
-              <Input
-                id="otherPlatform"
-                name="otherPlatform"
-                placeholder="Enter platform name"
-                value={formData.otherPlatform}
-                onChange={handleInputChange}
-              />
-            </div>
-          )}
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
               <Label htmlFor="budget">Estimated Budget (optional)</Label>
-              <Input
-                id="budget"
-                name="budget"
-                placeholder="$1,000 - $5,000"
+              <Select
                 value={formData.budget}
-                onChange={handleInputChange}
-              />
+                onValueChange={value => setFormData(prev => ({ ...prev, budget: value }))}
+              >
+                <SelectTrigger id="budget">
+                  <SelectValue placeholder="Select a budget range" />
+                </SelectTrigger>
+                <SelectContent>
+                  {budgetOptions.map(option => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
 
             <div className="space-y-2">
