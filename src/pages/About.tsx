@@ -81,6 +81,47 @@ const About = () => {
           </div>
         </div>
       </section>
+
+      <section className="py-16 bg-muted/40">
+        <div className="container px-4 mx-auto max-w-4xl">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-center">
+            How Process Pilot Works
+          </h2>
+          <p className="text-muted-foreground text-lg text-center mb-12">
+            We keep things simple, transparent, and secure so you always know how your automation is progressing.
+          </p>
+
+          <div className="space-y-10">
+            <div className="bg-white dark:bg-card p-6 md:p-8 rounded-xl shadow-sm subtle-border">
+              <h3 className="text-xl font-semibold mb-3">1. Create Your Account</h3>
+              <p className="text-muted-foreground">
+                Start by creating a Process Pilot account and logging into your dashboard. From there you can tell us which platforms you rely on today and what a successful automation looks like for your team.
+              </p>
+            </div>
+
+            <div className="bg-white dark:bg-card p-6 md:p-8 rounded-xl shadow-sm subtle-border">
+              <h3 className="text-xl font-semibold mb-3">2. Share Your Requirements</h3>
+              <p className="text-muted-foreground">
+                Submit a request explaining the workflows you would like automated, the tools involved, and the outcome you are aiming for. We review every detail and reach out if we need any clarification.
+              </p>
+            </div>
+
+            <div className="bg-white dark:bg-card p-6 md:p-8 rounded-xl shadow-sm subtle-border">
+              <h3 className="text-xl font-semibold mb-3">3. Build & Secure Deployment</h3>
+              <p className="text-muted-foreground">
+                Our team builds, hosts, and tests your automation in Make.com. When credentials or API keys are required, they are encrypted, stored securely, and only used to connect your accounts. We deploy the finished workflows using the secure access you provide, so automations run on your infrastructure while we manage the heavy lifting.
+              </p>
+            </div>
+
+            <div className="bg-white dark:bg-card p-6 md:p-8 rounded-xl shadow-sm subtle-border">
+              <h3 className="text-xl font-semibold mb-3">4. Continuous Care</h3>
+              <p className="text-muted-foreground">
+                Once live, we monitor performance, make adjustments on your behalf, and keep supporting you as your processes evolve. You get dependable automation with a friendly team ready to help whenever you need it.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
       
       {/* Team Section */}
       <section className="py-20 bg-secondary/50">
