@@ -15,6 +15,9 @@ const About = () => {
               We're on a mission to free businesses from repetitive tasks 
               through intelligent automation.
             </p>
+            <p className="mt-4 text-muted-foreground animate-slide-up" style={{ animationDelay: "100ms" }}>
+              Our founder, Jason Stolworthy, leads Process Pilot with a focus on bringing practical AI solutions to small businesses that want to scale smartly.
+            </p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
