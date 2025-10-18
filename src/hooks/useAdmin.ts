@@ -1,7 +1,8 @@
 
 import { useState, useEffect } from "react";
-import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/components/AuthProvider";
+
+const ADMIN_EMAIL = "jason.stolworthy@processpilot.co.uk";
 
 export const useAdmin = () => {
   const { user } = useAuth();
@@ -9,35 +10,17 @@ export const useAdmin = () => {
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const checkAdminRole = async () => {
-      if (!user) {
-        setIsAdmin(false);
-        setLoading(false);
-        return;
-      }
+    setLoading(true);
 
-      try {
-        // Use a direct query to avoid RLS issues
-        const { data, error } = await supabase.rpc('has_role', {
-          _user_id: user.id,
-          _role: 'admin'
-        });
+    if (!user?.email) {
+      setIsAdmin(false);
+      setLoading(false);
+      return;
+    }
 
-        if (error) {
-          console.error("Error checking admin role:", error);
-          setIsAdmin(false);
-        } else {
-          setIsAdmin(!!data);
-        }
-      } catch (error) {
-        console.error("Error checking admin role:", error);
-        setIsAdmin(false);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    checkAdminRole();
+    const normalizedEmail = user.email.toLowerCase();
+    setIsAdmin(normalizedEmail === ADMIN_EMAIL);
+    setLoading(false);
   }, [user]);
 
   return { isAdmin, loading };
