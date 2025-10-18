@@ -123,47 +123,38 @@ const About = () => {
         </div>
       </section>
       
-      {/* Team Section */}
       <section className="py-20 bg-secondary/50">
         <div className="container px-4 mx-auto">
-          <div className="max-w-3xl mx-auto text-center mb-16">
+          <div className="max-w-3xl mx-auto text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Meet the Experts
+              A Trusted, Personal Partnership
             </h2>
             <p className="text-lg text-muted-foreground">
-              Our team combines deep technical knowledge with business acumen.
+              You work directly with Jason, the founder of Process Pilot. That means clear communication, accountability, and a single point of contact who understands your business inside and out.
             </p>
           </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            {[
-              {
-                name: "Alex Rivera",
-                title: "Founder & Automation Architect",
-                bio: "15+ years experience in process automation and systems integration."
-              },
-              {
-                name: "Jamie Chen",
-                title: "AI Implementation Specialist",
-                bio: "Expert in machine learning models and automation intelligence."
-              },
-              {
-                name: "Taylor Morgan",
-                title: "Client Success Manager",
-                bio: "Dedicated to ensuring automation solutions deliver measurable ROI."
-              }
-            ].map((member, index) => (
-              <div key={index} className="text-center animate-fade-in" style={{ animationDelay: `${index * 100}ms` }}>
-                <div className="w-32 h-32 rounded-full bg-muted mx-auto mb-6">
-                  <div className="w-full h-full flex items-center justify-center text-muted-foreground">
-                    {member.name.split(' ').map(n => n[0]).join('')}
-                  </div>
-                </div>
-                <h3 className="text-xl font-semibold mb-2">{member.name}</h3>
-                <p className="text-primary font-medium mb-3">{member.title}</p>
-                <p className="text-muted-foreground">{member.bio}</p>
-              </div>
-            ))}
+
+          <div className="space-y-8 max-w-4xl mx-auto">
+            <div className="bg-white dark:bg-card p-8 rounded-xl shadow-sm subtle-border">
+              <h3 className="text-xl font-semibold mb-3">Connecting Platforms With Make.com</h3>
+              <p className="text-muted-foreground">
+                Even if your software doesn't talk to each other natively, we use Make.com to bridge the gaps. Your tools stay in place while the workflows around them become smoother, faster, and far less manual.
+              </p>
+            </div>
+
+            <div className="bg-white dark:bg-card p-8 rounded-xl shadow-sm subtle-border">
+              <h3 className="text-xl font-semibold mb-3">Security You Can Rely On</h3>
+              <p className="text-muted-foreground">
+                Credentials, API keys, and sensitive data are encrypted and kept under strict control. Only the automations you approve run, and everything is monitored so you can relax knowing your systems are in safe hands.
+              </p>
+            </div>
+
+            <div className="bg-white dark:bg-card p-8 rounded-xl shadow-sm subtle-border">
+              <h3 className="text-xl font-semibold mb-3">Ongoing Support Without the Complexity</h3>
+              <p className="text-muted-foreground">
+                Once your automations are live, Jason continues to manage and adjust them. You get the benefits of automation without having to learn new platforms or worry about maintenance.
+              </p>
+            </div>
           </div>
         </div>
       </section>
