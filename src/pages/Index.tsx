@@ -2,28 +2,9 @@
 import MainLayout from "@/layouts/MainLayout";
 import Hero from "@/components/Hero";
 import Features from "@/components/Features";
-import HoverCard from "@/components/HoverCard";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, BarChart, Clock, Zap } from "lucide-react";
 import { Link } from "react-router-dom";
-
-const testimonials = [
-  {
-    quote: "Process Pilot automated our invoice processing system, saving us 25 hours per week and eliminating manual errors.",
-    author: "Sarah Johnson",
-    title: "CFO, TechStream Inc."
-  },
-  {
-    quote: "The team at Process Pilot transformed our customer onboarding workflow, reducing our process time from days to minutes.",
-    author: "Michael Chen",
-    title: "Operations Director, NexGen Solutions"
-  },
-  {
-    quote: "Their automation expertise helped us integrate three separate systems that never worked together before. Game changer!",
-    author: "Priya Patel",
-    title: "CTO, Innovate Partners"
-  }
-];
 
 const Index = () => {
   return (
@@ -80,46 +61,6 @@ const Index = () => {
               <Button variant="outline" size="lg" className="rounded-full px-8 group">
                 Start Your Automation Journey
                 <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" size={18} />
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </section>
-      
-      {/* Testimonials Section */}
-      <section className="py-20 bg-secondary/50">
-        <div className="container px-4 mx-auto">
-          <div className="max-w-3xl mx-auto text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              What Our Clients Say
-            </h2>
-            <p className="text-lg text-muted-foreground">
-              Businesses are transforming their operations with our automation solutions.
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <HoverCard key={index} className="h-full">
-                <div className="bg-white dark:bg-card p-8 rounded-xl shadow-sm subtle-border h-full flex flex-col">
-                  <blockquote className="text-foreground/90 mb-6 flex-grow">
-                    "{testimonial.quote}"
-                  </blockquote>
-                  <footer>
-                    <div className="font-semibold">{testimonial.author}</div>
-                    <div className="text-sm text-muted-foreground">
-                      {testimonial.title}
-                    </div>
-                  </footer>
-                </div>
-              </HoverCard>
-            ))}
-          </div>
-          
-          <div className="mt-16 text-center">
-            <Link to="/request">
-              <Button size="lg" className="rounded-full px-8">
-                Request Your Automation
               </Button>
             </Link>
           </div>
