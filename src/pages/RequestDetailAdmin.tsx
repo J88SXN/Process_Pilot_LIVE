@@ -138,7 +138,8 @@ const RequestDetailAdmin = () => {
     requestTitle: string, 
     requestId: string,
     newStatus: string,
-    previousStatus: string
+    previousStatus: string,
+    paymentLink?: string | null
   ) => {
     try {
       const response = await supabase.functions.invoke("send-request-update-email", {
@@ -148,7 +149,8 @@ const RequestDetailAdmin = () => {
           requestTitle,
           requestId,
           newStatus,
-          previousStatus
+          previousStatus,
+          paymentLink
         }
       });
       
@@ -162,14 +164,16 @@ const RequestDetailAdmin = () => {
     }
   };
   
-  const createAndSendInvoice = async () => {
-    if (!request || !request.profiles || !request.estimated_cost) {
+  const createAndSendInvoice = async (targetRequest?: any) => {
+    const activeRequest = targetRequest || request;
+
+    if (!activeRequest || !activeRequest.profiles || !activeRequest.estimated_cost) {
       toast({
         title: "Cannot send invoice",
         description: "Missing customer information or estimated cost.",
         variant: "destructive"
       });
-      return;
+      return null;
     }
     
     setSendingInvoice(true);
@@ -177,13 +181,13 @@ const RequestDetailAdmin = () => {
       const { data, error } = await supabase.functions.invoke("create-payment-intent", {
         body: {
           operation: "create-invoice",
-          amount: request.estimated_cost,
-          requestId: request.id,
-          requestTitle: request.title,
-          customerEmail: request.profiles?.email,
-          customerName: `${request.profiles?.first_name || ''} ${request.profiles?.last_name || ''}`.trim(),
+          amount: activeRequest.estimated_cost,
+          requestId: activeRequest.id,
+          requestTitle: activeRequest.title,
+          customerEmail: activeRequest.profiles?.email,
+          customerName: `${activeRequest.profiles?.first_name || ''} ${activeRequest.profiles?.last_name || ''}`.trim(),
           metadata: {
-            userId: request.user_id,
+            userId: activeRequest.user_id,
             requestStatus: "Completed"
           }
         }
@@ -194,19 +198,21 @@ const RequestDetailAdmin = () => {
       if (data?.success) {
         toast({
           title: "Invoice Sent",
-          description: `Invoice has been created and sent to ${request.profiles.email}.`
+          description: `Invoice has been created and sent to ${activeRequest.profiles.email}.`
         });
         
         await supabase
           .from("payments")
           .insert({
-            request_id: request.id,
-            user_id: request.user_id,
+            request_id: activeRequest.id,
+            user_id: activeRequest.user_id,
             status: "Pending",
-            amount: request.estimated_cost,
+            amount: activeRequest.estimated_cost,
             payment_id: data.invoiceId,
             payment_method: "invoice"
           });
+
+        return data.invoiceUrl ?? null;
       }
     } catch (error: any) {
       console.error("Error sending invoice:", error);
@@ -215,9 +221,12 @@ const RequestDetailAdmin = () => {
         description: error.message || "Failed to send invoice",
         variant: "destructive"
       });
+      return null;
     } finally {
       setSendingInvoice(false);
     }
+
+    return null;
   };
   
   const handleSaveChanges = async () => {
@@ -244,32 +253,41 @@ const RequestDetailAdmin = () => {
         description: "The request has been updated successfully."
       });
       
-      setRequest({
+      const updatedRequest = {
         ...request,
         status: formData.status,
         estimated_cost: formData.estimated_cost ? Number(formData.estimated_cost) : null,
         title: formData.title,
         description: formData.description
-      });
+      };
+
+      setRequest(updatedRequest);
       
       if (formData.status !== previousStatus && request.profiles?.email) {
+        let paymentLink: string | null = null;
+
+        if (
+          formData.status === "completed" &&
+          previousStatus !== "completed" &&
+          updatedRequest.estimated_cost
+        ) {
+          paymentLink = await createAndSendInvoice(updatedRequest);
+        }
+
         await sendStatusUpdateEmail(
           request.profiles.email,
           request.profiles.first_name,
-          request.title,
+          updatedRequest.title,
           request.id,
           formData.status,
-          previousStatus
+          previousStatus,
+          paymentLink
         );
         
         toast({
           title: "Notification Sent",
           description: "The requester has been notified of the status change."
         });
-        
-        if (formData.status === "Completed" && previousStatus !== "Completed" && request.estimated_cost) {
-          await createAndSendInvoice();
-        }
       }
       
       setEditing(false);
@@ -743,22 +761,13 @@ const RequestDetailAdmin = () => {
                         });
                         
                         if (request.profiles?.email) {
-                          await sendStatusUpdateEmail(
-                            request.profiles.email,
-                            request.profiles.first_name,
-                            request.title,
-                            request.id,
-                            newStatus,
-                            previousStatus
-                          );
-                          
-                          toast({
-                            title: "Notification Sent",
-                            description: "The requester has been notified of the status change."
-                          });
-                          
+                          let paymentLink: string | null = null;
+
                           if (request.estimated_cost) {
-                            await createAndSendInvoice();
+                            paymentLink = await createAndSendInvoice({
+                              ...request,
+                              status: newStatus
+                            });
                           } else {
                             toast({
                               title: "No Invoice Sent",
@@ -766,6 +775,21 @@ const RequestDetailAdmin = () => {
                               variant: "destructive"
                             });
                           }
+
+                          await sendStatusUpdateEmail(
+                            request.profiles.email,
+                            request.profiles.first_name,
+                            request.title,
+                            request.id,
+                            newStatus,
+                            previousStatus,
+                            paymentLink
+                          );
+                          
+                          toast({
+                            title: "Notification Sent",
+                            description: "The requester has been notified of the status change."
+                          });
                         }
                       } catch (error: any) {
                         toast({

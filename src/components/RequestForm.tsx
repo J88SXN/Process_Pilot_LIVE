@@ -103,6 +103,28 @@ const RequestForm = () => {
 
       console.log("Request submitted successfully:", data);
 
+      const requesterEmail = user.email || formData.email;
+      const requestTitle =
+        data?.[0]?.title ||
+        (formData.name ? `${formData.name}'s Request` : "New Automation Request");
+
+      if (requesterEmail) {
+        try {
+          await supabase.functions.invoke("send-request-confirmation", {
+            body: {
+              recipient: requesterEmail,
+              recipientName: formData.name,
+              requestTitle
+            }
+          });
+          console.log("Confirmation email queued successfully");
+        } catch (emailError) {
+          console.error("Failed to send confirmation email:", emailError);
+        }
+      } else {
+        console.warn("No email address available for confirmation message");
+      }
+
       // If consultation was requested, send calendar invitation data
       if (formData.scheduleConsultation) {
         const { error: inviteError } = await supabase.functions.invoke('send-meeting-request', {
