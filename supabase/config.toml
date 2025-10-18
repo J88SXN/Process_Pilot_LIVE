@@ -1,0 +1,14 @@
+project_id = "axigbulsguuxwcbgmepc"
+
+# Edge Functions Configuration
+[functions.handle-credentials]
+verify_jwt = true
+
+[functions.create-payment-intent]
+verify_jwt = true
+
+[functions.send-meeting-request]
+verify_jwt = true
+
+[functions.send-request-update-email]
+verify_jwt = true
