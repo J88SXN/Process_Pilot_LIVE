@@ -18,13 +18,31 @@ import {
   ContextMenuTrigger,
   ContextMenuSeparator,
 } from "@/components/ui/context-menu";
+import { getErrorMessage } from "@/lib/utils";
+
+type ProfileSummary = {
+  first_name: string | null;
+  last_name: string | null;
+  company: string | null;
+};
+
+type RequestRecord = {
+  id: string;
+  title: string;
+  description: string;
+  status: string;
+  created_at: string;
+  user_id: string;
+  estimated_cost: number | null;
+  profiles?: ProfileSummary | null;
+};
 
 const Dashboard = () => {
   const { user, loading: authLoading } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
   const [activeTab, setActiveTab] = useState("all");
-  const [requests, setRequests] = useState<any[]>([]);
+  const [requests, setRequests] = useState<RequestRecord[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedRequestId, setSelectedRequestId] = useState<string | null>(null);
   const [stats, setStats] = useState({
@@ -71,11 +89,11 @@ const Dashboard = () => {
           completedRequests: completed,
           avgResponseTime: '8 hours'
         });
-      } catch (error: any) {
+      } catch (error: unknown) {
         console.error("Error fetching requests:", error);
         toast({
           title: "Error fetching requests",
-          description: error.message,
+          description: getErrorMessage(error, "Failed to fetch requests."),
           variant: "destructive"
         });
       } finally {

@@ -12,6 +12,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AnimatedPasswordInput } from "@/components/AnimatedPasswordInput";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { z } from "zod";
+import { getErrorMessage } from "@/lib/utils";
 
 const signUpSchema = z.object({
   email: z.string().email("Invalid email address").max(255, "Email must be less than 255 characters"),
@@ -70,10 +71,10 @@ const Auth = () => {
       });
 
       navigate("/dashboard");
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         title: "Error signing in",
-        description: error.message,
+        description: getErrorMessage(error, "Failed to sign in."),
         variant: "destructive",
       });
     } finally {
@@ -125,8 +126,8 @@ const Auth = () => {
         setLastName("");
         setCompany("");
       }
-    } catch (error: any) {
-      const errorMessage = error.message;
+    } catch (error: unknown) {
+      const errorMessage = getErrorMessage(error, "Failed to sign up.");
       if (errorMessage.includes("already registered")) {
         toast({
           title: "Account Exists",
@@ -162,10 +163,10 @@ const Auth = () => {
       });
       setShowResetDialog(false);
       setResetEmail("");
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         title: "Error sending reset email",
-        description: error.message,
+        description: getErrorMessage(error, "Failed to send reset email."),
         variant: "destructive",
       });
     } finally {

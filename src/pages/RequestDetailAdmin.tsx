@@ -49,6 +49,42 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { getErrorMessage } from "@/lib/utils";
+
+type ProfileRecord = {
+  id?: string;
+  first_name: string | null;
+  last_name: string | null;
+  company: string | null;
+  email?: string | null;
+};
+
+type PaymentRecord = {
+  id: string;
+  amount: number;
+  status: string;
+  created_at: string;
+};
+
+type RequestRecord = {
+  id: string;
+  user_id: string;
+  title: string;
+  description: string;
+  status: string;
+  created_at: string;
+  updated_at: string;
+  estimated_cost: number | null;
+  profiles?: ProfileRecord | null;
+  payments?: PaymentRecord[];
+};
+
+type CredentialRecord = {
+  id: string;
+  platform_name: string;
+  credentials_json: Record<string, unknown>;
+  created_at: string;
+};
 
 const RequestDetailAdmin = () => {
   const { requestId } = useParams<{ requestId: string }>();
@@ -56,7 +92,7 @@ const RequestDetailAdmin = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   
-  const [request, setRequest] = useState<any>(null);
+  const [request, setRequest] = useState<RequestRecord | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [sendingInvoice, setSendingInvoice] = useState(false);
@@ -67,7 +103,7 @@ const RequestDetailAdmin = () => {
     title: "",
     description: ""
   });
-  const [credentials, setCredentials] = useState<any[]>([]);
+  const [credentials, setCredentials] = useState<CredentialRecord[]>([]);
   
   useEffect(() => {
     if (adminLoading) return;
@@ -117,11 +153,11 @@ const RequestDetailAdmin = () => {
             setCredentials(credentialsData);
           }
         }
-      } catch (error: any) {
+      } catch (error: unknown) {
         console.error("Error fetching request:", error);
         toast({
           title: "Error",
-          description: error.message,
+          description: getErrorMessage(error, "Failed to fetch request."),
           variant: "destructive"
         });
       } finally {
@@ -164,7 +200,7 @@ const RequestDetailAdmin = () => {
     }
   };
   
-  const createAndSendInvoice = async (targetRequest?: any) => {
+  const createAndSendInvoice = async (targetRequest?: RequestRecord | null) => {
     const activeRequest = targetRequest || request;
 
     if (!activeRequest || !activeRequest.profiles || !activeRequest.estimated_cost) {
@@ -214,11 +250,11 @@ const RequestDetailAdmin = () => {
 
         return data.invoiceUrl ?? null;
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Error sending invoice:", error);
       toast({
         title: "Error",
-        description: error.message || "Failed to send invoice",
+        description: getErrorMessage(error, "Failed to send invoice"),
         variant: "destructive"
       });
       return null;
@@ -239,7 +275,7 @@ const RequestDetailAdmin = () => {
       const { error } = await supabase
         .from("requests")
         .update({
-          status: formData.status as any,  // Cast to any to avoid enum type errors
+          status: formData.status,
           estimated_cost: formData.estimated_cost ? Number(formData.estimated_cost) : null,
           title: formData.title,
           description: formData.description
@@ -291,10 +327,10 @@ const RequestDetailAdmin = () => {
       }
       
       setEditing(false);
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         title: "Error",
-        description: error.message,
+        description: getErrorMessage(error, "Failed to save request changes."),
         variant: "destructive"
       });
     } finally {
@@ -586,7 +622,7 @@ const RequestDetailAdmin = () => {
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  {credentials.map((cred: any) => (
+                  {credentials.map((cred) => (
                     <div key={cred.id} className="p-3 rounded-md bg-muted">
                       <div className="flex justify-between items-center mb-2">
                         <div className="font-medium">{cred.platform_name}</div>
@@ -605,13 +641,13 @@ const RequestDetailAdmin = () => {
                             </DialogHeader>
                             <div className="space-y-4 py-4">
                               <div className="grid grid-cols-3 gap-4">
-                                {Object.entries(cred.credentials_json).map(([key, value]: [string, any]) => (
+                                {Object.entries(cred.credentials_json).map(([key, value]) => (
                                   <div key={key} className="break-words">
                                     <div className="text-sm font-medium capitalize">{key.replace(/_/g, ' ')}</div>
                                     <div className="text-sm text-muted-foreground">
                                       {key === 'password' || key === 'apiKey' 
                                         ? '••••••••••••' 
-                                        : String(value)}
+                                        : String(value ?? "")}
                                     </div>
                                   </div>
                                 ))}
@@ -672,10 +708,10 @@ const RequestDetailAdmin = () => {
                             description: "The requester has been notified of the status change."
                           });
                         }
-                      } catch (error: any) {
+                      } catch (error: unknown) {
                         toast({
                           title: "Error",
-                          description: error.message,
+                          description: getErrorMessage(error, "Failed to approve request."),
                           variant: "destructive"
                         });
                       }
@@ -724,10 +760,10 @@ const RequestDetailAdmin = () => {
                             description: "The requester has been notified of the status change."
                           });
                         }
-                      } catch (error: any) {
+                      } catch (error: unknown) {
                         toast({
                           title: "Error",
-                          description: error.message,
+                          description: getErrorMessage(error, "Failed to deny request."),
                           variant: "destructive"
                         });
                       }
@@ -791,10 +827,10 @@ const RequestDetailAdmin = () => {
                             description: "The requester has been notified of the status change."
                           });
                         }
-                      } catch (error: any) {
+                      } catch (error: unknown) {
                         toast({
                           title: "Error",
-                          description: error.message,
+                          description: getErrorMessage(error, "Failed to mark request as completed."),
                           variant: "destructive"
                         });
                       }

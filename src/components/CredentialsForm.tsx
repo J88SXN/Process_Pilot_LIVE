@@ -12,6 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { AlertCircle, Lock, KeyRound } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { z } from "zod";
+import { getErrorMessage } from "@/lib/utils";
 
 const credentialsSchema = z.object({
   username: z.string().trim().max(200, "Username must be less than 200 characters").optional(),
@@ -135,10 +136,10 @@ const CredentialsForm = ({ requestId, platformList, onCredentialsSubmitted }: Cr
       if (onCredentialsSubmitted) {
         onCredentialsSubmitted();
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         title: "Error submitting credentials",
-        description: error.message,
+        description: getErrorMessage(error, "Failed to submit credentials."),
         variant: "destructive"
       });
     } finally {

@@ -25,17 +25,17 @@ import {
   Lock
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { getErrorMessage } from "@/lib/utils";
 
 // Define the payment type
 interface Payment {
   id: string;
   request_id: string;
-  user_id: string;
   amount: number;
   status: string;
-  payment_method: string | null;
-  payment_id: string | null;
+  stripe_payment_intent_id: string | null;
   created_at: string;
+  updated_at: string;
 }
 
 // Define the request type with a payments property
@@ -102,15 +102,15 @@ const RequestDetail = ({ requestId }: RequestDetailProps) => {
           // Add payments to request object
           const requestWithPayments: RequestWithPayments = {
             ...data,
-            payments: (paymentsData || []) as any
+            payments: paymentsData || []
           };
           setRequest(requestWithPayments);
         }
-      } catch (error: any) {
+      } catch (error: unknown) {
         console.error("Full error:", error);
         toast({
           title: "Error fetching request",
-          description: error.message,
+          description: getErrorMessage(error, "Failed to fetch request."),
           variant: "destructive",
         });
       } finally {
@@ -158,7 +158,7 @@ const RequestDetail = ({ requestId }: RequestDetailProps) => {
         // Add payments to request object
         const requestWithPayments: RequestWithPayments = {
           ...data,
-          payments: (paymentsData || []) as any
+          payments: paymentsData || []
         };
         setRequest(requestWithPayments);
       }

@@ -16,6 +16,7 @@ import { Search, Loader } from "lucide-react";
 import AdminRequestStats from "@/components/admin/AdminRequestStats";
 import AdminRequestTabs from "@/components/admin/AdminRequestTabs";
 import { Request, RequestWithProfile } from "@/types/requests";
+import { getErrorMessage } from "@/lib/utils";
 
 const AdminDashboard = () => {
   const { isAdmin, loading: adminLoading } = useAdmin();
@@ -107,11 +108,11 @@ const AdminDashboard = () => {
           completed,
           denied
         });
-      } catch (error: any) {
+      } catch (error: unknown) {
         console.error("Error fetching admin data:", error);
         toast({
           title: "Error",
-          description: error.message || "Failed to load admin data",
+          description: getErrorMessage(error, "Failed to load admin data"),
           variant: "destructive"
         });
       } finally {

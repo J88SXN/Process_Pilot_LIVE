@@ -6,6 +6,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import RequestTable from "@/components/admin/RequestTable";
 import { EmptyRequestState } from "@/components/admin/EmptyRequestState";
 import { Loader } from "lucide-react";
+import type { useToast } from "@/hooks/use-toast";
+import { getErrorMessage } from "@/lib/utils";
 
 interface AdminRequestTabsProps {
   activeTab: string;
@@ -15,7 +17,7 @@ interface AdminRequestTabsProps {
   requests: RequestWithProfile[];
   setRequests: React.Dispatch<React.SetStateAction<RequestWithProfile[]>>;
   navigate: NavigateFunction;
-  toast: any;
+  toast: ReturnType<typeof useToast>["toast"];
 }
 
 const AdminRequestTabs = ({ 
@@ -44,10 +46,10 @@ const AdminRequestTabs = ({
       setRequests(requests.map(r => 
         r.id === requestId ? { ...r, status: newStatus } : r
       ));
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         title: "Error",
-        description: error.message,
+        description: getErrorMessage(error, "Failed to update request."),
         variant: "destructive"
       });
     }

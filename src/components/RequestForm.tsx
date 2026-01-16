@@ -17,6 +17,7 @@ import {
   SelectTrigger,
   SelectValue
 } from "@/components/ui/select";
+import { getErrorMessage } from "@/lib/utils";
 
 const budgetOptions = [
   { value: "usd_0_1k", label: "USD 0 - 1,000" },
@@ -163,11 +164,11 @@ const RequestForm = () => {
       });
       
       navigate("/dashboard");
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Full error object:", error);
       toast({
         title: "Error submitting request",
-        description: error.message,
+        description: getErrorMessage(error, "Failed to submit request."),
         variant: "destructive"
       });
     } finally {

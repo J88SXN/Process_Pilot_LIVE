@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { z } from "zod";
+import { getErrorMessage } from "@/lib/utils";
 
 const adminSchema = z.object({
   userId: z.string().uuid({ message: "Please enter a valid user ID (UUID format)" })
@@ -80,10 +81,10 @@ const MakeAdminForm = () => {
       });
       
       setUserId("");
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         title: "Error",
-        description: error.message || "Failed to add admin role",
+        description: getErrorMessage(error, "Failed to add admin role"),
         variant: "destructive"
       });
     } finally {

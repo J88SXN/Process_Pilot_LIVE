@@ -14,6 +14,7 @@ import {
   useElements,
 } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import { getErrorMessage } from "@/lib/utils";
 
 // Initialize Stripe with the publishable key
 // Replace this with your actual publishable key
@@ -52,10 +53,10 @@ const PaymentForm = ({ requestId, amount, onSuccess }: PaymentFormProps) => {
         }
 
         setClientSecret(response.data.clientSecret);
-      } catch (error: any) {
+      } catch (error: unknown) {
         toast({
           title: "Error",
-          description: error.message,
+          description: getErrorMessage(error, "Failed to create a payment intent."),
           variant: "destructive",
         });
       } finally {
@@ -167,10 +168,10 @@ const CheckoutForm = ({
           navigate("/dashboard");
         }
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         title: "Payment Failed",
-        description: error.message,
+        description: getErrorMessage(error, "Payment failed."),
         variant: "destructive",
       });
     } finally {
