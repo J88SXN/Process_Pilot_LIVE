@@ -12,6 +12,7 @@ import ErrorBoundary from "@/components/ErrorBoundary";
 // Lazy load pages for better performance
 const Index = lazy(() => import("./pages/Index"));
 const About = lazy(() => import("./pages/About"));
+const Pricing = lazy(() => import("./pages/Pricing"));
 const RequestSubmission = lazy(() => import("./pages/RequestSubmission"));
 const Dashboard = lazy(() => import("./pages/Dashboard"));
 const Auth = lazy(() => import("./pages/Auth"));
@@ -49,6 +50,7 @@ const App = () => (
                 <Routes>
                   <Route path="/" element={<Index />} />
                   <Route path="/about" element={<About />} />
+                  <Route path="/pricing" element={<Pricing />} />
                   <Route path="/request" element={<RequestSubmission />} />
                   <Route path="/dashboard" element={<Dashboard />} />
                   <Route path="/auth" element={<Auth />} />

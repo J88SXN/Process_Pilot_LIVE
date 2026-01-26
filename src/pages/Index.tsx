@@ -2,6 +2,7 @@
 import MainLayout from "@/layouts/MainLayout";
 import Hero from "@/components/Hero";
 import Features from "@/components/Features";
+import Testimonials from "@/components/Testimonials";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, BarChart, Clock, Zap } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -71,6 +72,8 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      <Testimonials />
       </div>
     </MainLayout>
   );

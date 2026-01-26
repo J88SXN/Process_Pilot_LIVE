@@ -89,6 +89,12 @@ const Navbar = () => {
             About
           </Link>
           <Link
+            to="/pricing"
+            className="text-foreground/80 hover:text-primary font-medium"
+          >
+            Pricing
+          </Link>
+          <Link
             to="/request"
             className="text-foreground/80 hover:text-primary font-medium"
           >
@@ -176,6 +182,13 @@ const Navbar = () => {
             onClick={closeMenu}
           >
             About
+          </Link>
+          <Link
+            to="/pricing"
+            className="text-foreground/80 hover:text-primary font-medium py-2"
+            onClick={closeMenu}
+          >
+            Pricing
           </Link>
           <Link
             to="/request"
