@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Menu, X, User, LogOut, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -26,7 +26,7 @@ const Navbar = () => {
   useEffect(() => {
     const fetchUserName = async () => {
       if (user) {
-        const { data, error } = await supabase
+        const { data } = await supabase
           .from('profiles')
           .select('first_name, last_name')
           .eq('id', user.id)
@@ -38,11 +38,13 @@ const Navbar = () => {
         } else {
           setUserName(user.email?.split('@')[0] || 'User');
         }
+      } else {
+        setUserName("");
       }
     };
 
     fetchUserName();
-  }, [user]);
+  }, [user?.id]); // Only re-fetch when user ID changes
 
   useEffect(() => {
     const handleScroll = () => {
@@ -52,13 +54,13 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const toggleMenu = () => setIsOpen(!isOpen);
-  const closeMenu = () => setIsOpen(false);
+  const toggleMenu = useCallback(() => setIsOpen(!isOpen), [isOpen]);
+  const closeMenu = useCallback(() => setIsOpen(false), []);
 
-  const handleSignOut = async () => {
+  const handleSignOut = useCallback(async () => {
     await signOut();
     navigate("/");
-  };
+  }, [signOut, navigate]);
 
   return (
     <header

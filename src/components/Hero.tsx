@@ -25,28 +25,35 @@ const Hero = () => {
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-slide-up">
             <Link to="/request">
-              <Button size="lg" className="rounded-full px-8 group">
+              <Button
+                size="lg"
+                className="rounded-full px-8 group hover:shadow-xl hover:shadow-primary/20 transition-all duration-300"
+              >
                 Request Automation
                 <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" size={18} />
               </Button>
             </Link>
             <Link to="/about">
-              <Button variant="outline" size="lg" className="rounded-full px-8">
+              <Button
+                variant="outline"
+                size="lg"
+                className="rounded-full px-8 hover:bg-primary/5 transition-all duration-300"
+              >
                 Learn More
               </Button>
             </Link>
           </div>
           
           <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6 animate-fade-in">
-            <div className="glass subtle-border rounded-lg p-6 text-center">
+            <div className="glass subtle-border rounded-lg p-6 text-center hover:scale-105 transition-transform duration-300 cursor-default">
               <div className="text-4xl font-bold text-primary mb-2">70%</div>
               <p className="text-muted-foreground">Time Saved on Average</p>
             </div>
-            <div className="glass subtle-border rounded-lg p-6 text-center">
+            <div className="glass subtle-border rounded-lg p-6 text-center hover:scale-105 transition-transform duration-300 cursor-default">
               <div className="text-4xl font-bold text-primary mb-2">100+</div>
               <p className="text-muted-foreground">Processes Automated</p>
             </div>
-            <div className="glass subtle-border rounded-lg p-6 text-center">
+            <div className="glass subtle-border rounded-lg p-6 text-center hover:scale-105 transition-transform duration-300 cursor-default">
               <div className="text-4xl font-bold text-primary mb-2">24/7</div>
               <p className="text-muted-foreground">Automated Operations</p>
             </div>

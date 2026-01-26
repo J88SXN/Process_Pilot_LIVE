@@ -9,11 +9,12 @@ import { Link } from "react-router-dom";
 const Index = () => {
   return (
     <MainLayout>
-      <Hero />
-      <Features />
-      
-      {/* How It Works Section */}
-      <section className="py-20">
+      <div className="page-transition">
+        <Hero />
+        <Features />
+
+        {/* How It Works Section */}
+        <section className="py-20">
         <div className="container px-4 mx-auto">
           <div className="max-w-3xl mx-auto text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -25,29 +26,29 @@ const Index = () => {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            <div className="flex flex-col items-center text-center p-6 animate-fade-in" style={{ animationDelay: "0ms" }}>
-              <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-                <Zap className="w-8 h-8 text-primary" />
+            <div className="flex flex-col items-center text-center p-6 animate-fade-in group hover:scale-105 transition-transform duration-300" style={{ animationDelay: "0ms" }}>
+              <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors duration-300">
+                <Zap className="w-8 h-8 text-primary group-hover:scale-110 transition-transform duration-300" />
               </div>
               <h3 className="text-xl font-semibold mb-3">1. Submit Request</h3>
               <p className="text-muted-foreground">
                 Tell us about your process and what you're looking to automate.
               </p>
             </div>
-            
-            <div className="flex flex-col items-center text-center p-6 animate-fade-in" style={{ animationDelay: "100ms" }}>
-              <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-                <BarChart className="w-8 h-8 text-primary" />
+
+            <div className="flex flex-col items-center text-center p-6 animate-fade-in group hover:scale-105 transition-transform duration-300" style={{ animationDelay: "100ms" }}>
+              <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors duration-300">
+                <BarChart className="w-8 h-8 text-primary group-hover:scale-110 transition-transform duration-300" />
               </div>
               <h3 className="text-xl font-semibold mb-3">2. We Evaluate</h3>
               <p className="text-muted-foreground">
                 Our experts assess your request and provide a tailored solution and quote.
               </p>
             </div>
-            
-            <div className="flex flex-col items-center text-center p-6 animate-fade-in" style={{ animationDelay: "200ms" }}>
-              <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-                <Clock className="w-8 h-8 text-primary" />
+
+            <div className="flex flex-col items-center text-center p-6 animate-fade-in group hover:scale-105 transition-transform duration-300" style={{ animationDelay: "200ms" }}>
+              <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors duration-300">
+                <Clock className="w-8 h-8 text-primary group-hover:scale-110 transition-transform duration-300" />
               </div>
               <h3 className="text-xl font-semibold mb-3">3. Implementation</h3>
               <p className="text-muted-foreground">
@@ -58,7 +59,11 @@ const Index = () => {
           
           <div className="text-center mt-12">
             <Link to="/request">
-              <Button variant="outline" size="lg" className="rounded-full px-8 group">
+              <Button
+                variant="outline"
+                size="lg"
+                className="rounded-full px-8 group hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-300"
+              >
                 Start Your Automation Journey
                 <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" size={18} />
               </Button>
@@ -66,6 +71,7 @@ const Index = () => {
           </div>
         </div>
       </section>
+      </div>
     </MainLayout>
   );
 };

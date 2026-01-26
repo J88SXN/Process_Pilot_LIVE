@@ -56,12 +56,12 @@ const Features = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {features.map((feature, index) => (
-            <div 
-              key={index} 
-              className="bg-white dark:bg-card p-8 rounded-xl shadow-sm subtle-border card-hover"
+            <div
+              key={index}
+              className="bg-white dark:bg-card p-8 rounded-xl shadow-sm subtle-border card-hover animate-fade-in group"
               style={{ animationDelay: `${index * 100}ms` }}
             >
-              <div className="mb-4">{feature.icon}</div>
+              <div className="mb-4 group-hover:scale-110 transition-transform duration-300">{feature.icon}</div>
               <h3 className="text-xl font-semibold mb-3">{feature.title}</h3>
               <p className="text-muted-foreground">{feature.description}</p>
             </div>
