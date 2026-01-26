@@ -10,7 +10,7 @@ const popularAutomations = [
   {
     title: "Email to Spreadsheet Sync",
     description: "Automatically log emails and attachments to Google Sheets",
-    price: "$500 - $800",
+    price: "£500 - £800",
     deliveryTime: "2-3 days",
     features: [
       "Gmail integration",
@@ -23,7 +23,7 @@ const popularAutomations = [
   {
     title: "Lead Generation Pipeline",
     description: "Capture leads from multiple sources and route to your CRM",
-    price: "$1,200 - $1,800",
+    price: "£1,200 - £1,800",
     deliveryTime: "1-2 weeks",
     features: [
       "Multi-platform integration",
@@ -37,7 +37,7 @@ const popularAutomations = [
   {
     title: "Social Media Manager",
     description: "Schedule and post content across multiple social platforms",
-    price: "$900 - $1,400",
+    price: "£900 - £1,400",
     deliveryTime: "1 week",
     features: [
       "Multi-platform posting",
@@ -50,7 +50,7 @@ const popularAutomations = [
   {
     title: "Invoice & Payment Automation",
     description: "Automatic invoice generation, sending, and payment tracking",
-    price: "$1,500 - $2,200",
+    price: "£1,500 - £2,200",
     deliveryTime: "1-2 weeks",
     features: [
       "Invoice generation",
@@ -64,7 +64,7 @@ const popularAutomations = [
   {
     title: "Customer Support Workflow",
     description: "Automate ticket routing, responses, and escalation",
-    price: "$2,000 - $3,000",
+    price: "£2,000 - £3,000",
     deliveryTime: "2-3 weeks",
     features: [
       "Help desk integration",
@@ -79,7 +79,7 @@ const popularAutomations = [
   {
     title: "E-commerce Order Processing",
     description: "Streamline order fulfillment from purchase to delivery",
-    price: "$1,800 - $2,800",
+    price: "£1,800 - £2,800",
     deliveryTime: "2-3 weeks",
     features: [
       "Shopify/WooCommerce sync",
@@ -223,7 +223,7 @@ const Pricing = () => {
                 </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground">
-                    All prices include automation design, Make.com setup, testing, documentation, training, and 7 days of post-launch support. Ongoing monitoring and maintenance can be added for $300/month.
+                    All prices include automation design, Make.com setup, testing, documentation, training, and 7 days of post-launch support. Ongoing monitoring and maintenance can be added for £300/month.
                   </p>
                 </CardContent>
               </Card>
@@ -234,7 +234,7 @@ const Pricing = () => {
                 </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground">
-                    Yes. You'll need an active Make.com subscription (starting at $9/month). We build the automation in our environment for testing, then deploy it to your account for full ownership and control.
+                    Yes. You'll need an active Make.com subscription (starting at £7/month). We build the automation in our environment for testing, then deploy it to your account for full ownership and control.
                   </p>
                 </CardContent>
               </Card>
@@ -245,7 +245,7 @@ const Pricing = () => {
                 </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground">
-                    Minor tweaks during the 7-day support period are free. After that, we offer hourly rates ($150/hr) or monthly maintenance plans starting at $300/month for ongoing updates and monitoring.
+                    Minor tweaks during the 7-day support period are free. After that, we offer hourly rates (£150/hr) or monthly maintenance plans starting at £300/month for ongoing updates and monitoring.
                   </p>
                 </CardContent>
               </Card>
@@ -256,7 +256,7 @@ const Pricing = () => {
                 </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground">
-                    We require 50% upfront to begin work and 50% upon completion. For projects over $3,000, we can arrange milestone-based payments.
+                    We require 50% upfront to begin work and 50% upon completion. For projects over £3,000, we can arrange milestone-based payments.
                   </p>
                 </CardContent>
               </Card>

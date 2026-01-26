@@ -123,7 +123,7 @@ const PricingCalculator = () => {
               <Label className="cursor-pointer flex-1" onClick={() => setIncludeSupport(!includeSupport)}>
                 <div className="font-medium">30-Day Support & Monitoring</div>
                 <div className="text-sm text-muted-foreground">
-                  Ongoing monitoring and adjustments (+$300)
+                  Ongoing monitoring and adjustments (+£300)
                 </div>
               </Label>
             </div>
@@ -142,10 +142,10 @@ const PricingCalculator = () => {
             <div className="text-center p-6 bg-primary/5 rounded-lg">
               <div className="text-sm text-muted-foreground mb-2">Estimated Price Range</div>
               <div className="text-4xl font-bold text-primary">
-                ${price.min.toLocaleString()} - ${price.max.toLocaleString()}
+                £{price.min.toLocaleString()} - £{price.max.toLocaleString()}
               </div>
               <div className="text-sm text-muted-foreground mt-2">
-                Most likely: ${price.estimated.toLocaleString()}
+                Most likely: £{price.estimated.toLocaleString()}
               </div>
             </div>
 

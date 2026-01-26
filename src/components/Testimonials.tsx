@@ -15,7 +15,7 @@ const testimonials = [
     name: "Marcus Chen",
     role: "CEO",
     company: "DataSync Inc",
-    content: "Jason took the time to understand our workflow before building anything. The automation he created has saved us $3,000/month in manual data entry costs.",
+    content: "Jason took the time to understand our workflow before building anything. The automation he created has saved us £3,000/month in manual data entry costs.",
     rating: 5,
     initials: "MC"
   },

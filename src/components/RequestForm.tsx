@@ -20,15 +20,15 @@ import {
 import { getErrorMessage } from "@/lib/utils";
 
 const budgetOptions = [
-  { value: "usd_0_1k", label: "USD 0 - 1,000" },
-  { value: "usd_1k_5k", label: "USD 1,000 - 5,000" },
-  { value: "usd_5k_plus", label: "USD 5,000+" },
-  { value: "gbp_0_1k", label: "GBP 0 - 1,000" },
-  { value: "gbp_1k_5k", label: "GBP 1,000 - 5,000" },
-  { value: "gbp_5k_plus", label: "GBP 5,000+" },
-  { value: "eur_0_1k", label: "EUR 0 - 1,000" },
-  { value: "eur_1k_5k", label: "EUR 1,000 - 5,000" },
-  { value: "eur_5k_plus", label: "EUR 5,000+" }
+  { value: "gbp_0_1k", label: "£0 - £1,000" },
+  { value: "gbp_1k_5k", label: "£1,000 - £5,000" },
+  { value: "gbp_5k_plus", label: "£5,000+" },
+  { value: "usd_0_1k", label: "$0 - $1,000" },
+  { value: "usd_1k_5k", label: "$1,000 - $5,000" },
+  { value: "usd_5k_plus", label: "$5,000+" },
+  { value: "eur_0_1k", label: "€0 - €1,000" },
+  { value: "eur_1k_5k", label: "€1,000 - €5,000" },
+  { value: "eur_5k_plus", label: "€5,000+" }
 ];
 
 const RequestForm = () => {
